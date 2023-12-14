@@ -10,46 +10,49 @@ int random_value_generator() {//to the template?
     necto += 1;
     return (necto % 100);
 }
-//class DB {};
+class DB;
 class Zemtseva {
 public:
     int inf0 = (random_value_generator());
+    int indicate = 0;
     Zemtseva() {};
-    //virtual void change(int a) = 0;
-    virtual bool should_be_copied() { return true; };
+    Zemtseva(int a) {};
+    virtual void change_Zem(int a) = 0;
+    //virtual bool should_be_copied() { return true; };
     virtual void print() { cout << inf0; };
-    virtual void copy(Zemtseva* way, int a) /*{ way->adding(new Zemtseva(a)); }*/;
-    Zemtseva(int a) { inf0 = a; }
+    virtual void copy(list<Zemtseva*>* way) { /*way->push_back(new Zemtseva_1(a)); */};
     virtual ~Zemtseva() {};
-//protected: virtual void docopy(DB* way, int a);
 };
 
 class Zemtseva_1 : public Zemtseva {
     list<int*>* inf11 = new list<int*>;
     char inf12[10] = "something";
-    void change(int a = 16) { (*inf11).push_back(&a); };//нереализ.
+    void change_Zem(int a = 16) { (*inf11).push_back(&a); };//реализовано?
 public:
-    Zemtseva_1() {};
-    //virtual void copy(DB* way, int a) { way->adding(new Zemtseva(a)); };
-    //virtual Zemtseva* copy(int a) { return new Zemtseva(a); };
-    //Zemtseva_1(const Zemtseva_1& obj_for_copy) {};
-    //virtual bool should_be_copied() { return true; };
+    Zemtseva_1() { indicate = 1; };
+    Zemtseva_1(int a) {inf0 = a; indicate = 1;};
+    virtual void copy(list<Zemtseva*>* way) {
+        way->push_back(new Zemtseva_1(inf0));
+    };
+
     void print() {
         for (list<int*>::iterator it = (*inf11).begin(); it != (*inf11).end(); ++it) {
-            cout << *it << " ";
+            cout << **it << " ";
         };
-        cout << inf12;
+        cout << inf12 << " ";
+        //cout << inf13;
     };
     ~Zemtseva_1() { delete inf11; };
+    //Zemtseva_1(const Zemtseva_1& obj_for_copy) {};
+    //virtual bool should_be_copied() { return true; };
 };
 
 class Zemtseva_2 : public Zemtseva_1 {
     float* inf2 = new float(random_value_generator());
 public:
-    Zemtseva_2() {};
-    //virtual void copy(DB way, int a) {};
+    Zemtseva_2() { indicate = 2; };
+    virtual void copy(list<Zemtseva*>* way) {};
     //virtual Zemtseva* copy(int a) { throw Wrong_element_exeptinon();};
-    //Zemtseva_2(const Zemtseva_2& obj_for_copy){}
     //virtual bool should_be_copied() { return false; };//Zemtseva* copy() { return new Zemtseva_2(*this); };
     void print() {
         cout << *inf2 << '\t';
@@ -60,9 +63,8 @@ public:
 class Zemtseva_3 : public Zemtseva_2 {
     double* inf3 = new double(19.03);
 public:
-    Zemtseva_3() {};
-    void copy(Zemtseva*, int a) {};
-    //Zemtseva_3(const Zemtseva_3& obj_for_copy) {}
+    Zemtseva_3() { indicate = 3; };
+    virtual void copy(list<Zemtseva*>* way) {};    //virtual Zemtseva* copy(int a) { throw Wrong_element_exeptinon();};
     //virtual bool should_be_copied() { return false; };//Zemtseva* copy() { return new Zemtseva_3(*this); };
     void print() {
         cout << *inf3 << '\t';
@@ -98,14 +100,8 @@ public:
             }
             this->ourdata.clear();
         };
-        //adding(new Zemtseva_1);
         for (list<Zemtseva*>::iterator it = (obj.ourdata).begin(); it != obj.ourdata.end(); ++it) {
-            Zemtseva m;
-            (*it)->copy(&m, ((*it)->inf0));
-            //adding(m);//(куда), что
-        ////    try { this->adding((*it)->copy((*it)->inf0)); //this->ourdata.emplace_back((*it)->copy((*it)->inf0));
-        ////}//emplase/push?
-        ////    catch (...) { continue; }
+            (*it)->copy(&ourdata);
         }
         return *this;
     };
@@ -123,4 +119,4 @@ public:
     }
 };
 
-//inline void Zemtseva::copy(Zemtseva* way, int a) { way->adding(new Zemtseva(a)); };
+//inline void Zemtseva_1::copy(DB* way, int a) { way->adding(new Zemtseva(a)); };

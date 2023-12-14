@@ -9,7 +9,7 @@ struct Leaks {
 int main()
 {
     DB db1, db2;
-    Zemtseva* a1 = new Zemtseva_1();
+    Zemtseva* a1 = new Zemtseva_1;
     Zemtseva* a2 = new Zemtseva_2;
     Zemtseva* a3 = new Zemtseva_3;
     Zemtseva* b1 = new Zemtseva_1;
@@ -33,6 +33,7 @@ int main()
     //Zemtseva* a6 = new Zemtseva_2;//1;
     //db1.adding(a6);
     db2 = db1;
+    //a1->change_Zem(7);
     db1.print();
     db2.print();
     return 0;
